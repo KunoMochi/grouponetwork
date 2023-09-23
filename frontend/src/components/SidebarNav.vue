@@ -7,9 +7,7 @@
 </template>
 
 <script>
-    export default {
-        name: 'SidebarComp'
-    }
+
 </script>
 
 <style lang="scss">

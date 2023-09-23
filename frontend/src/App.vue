@@ -1,6 +1,8 @@
+
+import SidebarComp from './components/SidebarComp.vue';
 <template>
   <div class="app">
-    <Sidebar />
+    <SideBarNav />
     <!-- <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/forum">Forum</router-link> |
@@ -13,8 +15,8 @@
   </div>
 </template>
 
-<script>
-  import Sidebar from './components/SidebarComp.vue'
+<script setup>
+  import SideBarNav from '@/components/SideBarNav.vue'
 </script>
 
 <style lang="scss">

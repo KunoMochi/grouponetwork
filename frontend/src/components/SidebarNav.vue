@@ -3,11 +3,11 @@
         <div class="home">
             <router-link to="/">Home</router-link>
         </div>
-        <div class="profile">
-            <router-link to="/profile">Profile</router-link>
-        </div>
         <div class="forum">
             <router-link to="/forum">Forum</router-link>
+        </div>
+        <div class="profile">
+            <router-link to="/profile">Profile</router-link>
         </div>
     </aside>
 </template>

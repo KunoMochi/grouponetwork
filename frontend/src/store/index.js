@@ -6,6 +6,7 @@ export default createStore({
     authToken: '',
     userId: '',
     username: '',
+    isAuth: false,
     showModal1: false,
     showModal2: false
   },
@@ -15,13 +16,23 @@ export default createStore({
     },
     getUserId(state) {
       return state.userId
+    },
+    getUserName(state) {
+      return state.username
     }
   },
   mutations: {
     loginUser (state, payload) {
       state.authToken = payload.token
+      state.isAuth = true
       state.userId = payload.userId
       state.username = payload.username
+    },
+    logoutUser (state) {
+      state.authToken = ''
+      state.userId = ''
+      state.username = ''
+      state.isAuth = false
     },
     changeModalState (state, payload) {
       // console.log(payload)
@@ -93,6 +104,9 @@ export default createStore({
         modal1 = true
       }
       context.commit('changeModalState', {showModal1: modal1, showModal2: modal2})
+    },
+    onLogOut(context) {
+      context.commit('logoutUser')
     }
   },
   modules: {

@@ -51,20 +51,13 @@ exports.signup = (req, res, next) => {
 exports.login = (req, res, next) => {
 	const db = req.app.locals.db;
 
-	db.query('SELECT UserName FROM Users WHERE UserName = ' + req.body.username, (err) => {
-			if (err) {
-				console.error(err)
-				return res.status(401).json({
-					error: new Error('User not found!')
-				});
-			}
-		})
-	db.query('SELECT Password FROM Users WHERE UserName = ' + req.body,username, function(err, result) {
+	db.query('SELECT * FROM Users WHERE UserName = \'' + req.body.username + '\'', function(err, result) {
+		const user = result.recordset[0]
 		if (err) {
 			console.error(err)
 			return res.status(500).json({ error: err })
 		}
-		bcrypt.compare(req.body.password, result.recordset[0].Password).then(
+		bcrypt.compare(req.body.password, user.Password).then(
 			(valid) => {
 				if (!valid) {
 					return res.status(401).json({
@@ -72,11 +65,11 @@ exports.login = (req, res, next) => {
 					});
 				}
 				const token = jwt.sign(
-					{ userId: user._id },
+					{ userId: user.UserID },
 					'RANDOM_TOKEN_SECRET',
 					{ expiresIn: '24h' });
 				res.status(200).json({
-					userId: user._id,
+					userId: user.UserID,
 					token: token
 				});
 			}

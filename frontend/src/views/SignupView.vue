@@ -14,7 +14,7 @@
             <input v-model="confPass" type="password" class="confirm-password-box" />
         </div>
         <div class="username-error" v-show="showModal1">
-            <p>Username cannot be empty!</p>
+            <p>Username is required!</p>
         </div>
         <div class="pass-error" v-show="showModal2">
             <p>Password does not match!</p>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -38,7 +38,13 @@ export default {
         }
     },
     computed: {
-        ...mapState(['showModal1','showModal2'])
+        ...mapState(['showModal1','showModal2']),
+        ...mapGetters(['getAuth','getUserId'])
+    },
+    watch: {
+        getAuth() {
+            this.$router.push('/')
+        }
     },
     methods: {
         ...mapActions(['onSignUp'])
@@ -62,6 +68,7 @@ export default {
         font-size: medium;
         width: 30rem;
     }
+
     .username-error, .pass-error {
         color: red;
     }

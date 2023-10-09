@@ -1,17 +1,17 @@
 <template>
     <div class="login">
-        <h1>This is the Login page</h1>
+        <h1>Welcome back!</h1>
         <div class="username">
-            <p>Username</p>
-            <input class="username-box">
+            <p><label> Username</label></p>
+            <input class="username-box" id="username">
         </div>
         <div class="password">
-            <p>Password</p>
-            <input class="password-box">
+            <p><label>Password</label></p>
+            <input class="password-box" id="password">
         </div>
         <div>
-            <button>Login</button>
-            <button>Create Account</button>
+            <button>Login</button> | 
+            <router-link to="/signup">Create an account</router-link>
         </div>
     </div>
 </template>
@@ -31,5 +31,12 @@
     input {
         font-size: medium;
         width: 30rem;
+    }
+
+    a {
+        font-size: small;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
     }
 </style>

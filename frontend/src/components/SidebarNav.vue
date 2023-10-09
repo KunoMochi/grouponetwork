@@ -21,7 +21,7 @@
         text-align: left;
         display: flex;
         flex-direction: column;
-        width: calc(3rem + 32px);
+        width: calc(4rem + 32px);
         min-height: calc(100vh - 162px);
         overflow: hidden;
         padding: 1rem;

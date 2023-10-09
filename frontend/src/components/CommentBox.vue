@@ -1,15 +1,27 @@
 <template>
     <div class="comment-box">
-        <div class="comment-head"><p class="user">
-            <router-link to="/profile">[ Username1234 ]</router-link></p></div>
-        <div class="comment-area">This is where the post lives</div>
-        <div><p class="time-elapsed">Posted XXXX ago</p></div>
+        <div class="comment-head">
+            <div class="userId">
+                <router-link to="/profile">[ Username1234 ]</router-link>
+                <div class="commentSpacer"></div>
+                <div class="commentID">
+                    24
+                </div>
+            </div>
+        </div>
+        <div class="commentArea">This is where the post lives</div>
+        <div><p class="timeStamp">Posted XXXX ago</p></div>
     </div>
 </template>
 
 <style lang="scss">
+    #comment-head {
+        display: flex;
+        width: 100%;
+    }
 
-    .user {
+    .userId {
+        min-width: fit-content;
         text-align: left;
         font-weight: bold;
 
@@ -19,12 +31,21 @@
         }
     }
 
-    .time-elapsed {
+    .commentSpacer {
+        width: 100%;
+    }
+
+    .commentID {
+        min-width: fit-content;
         text-align: right;
+    }
+
+    .timeStamp {
+        text-align: end;
         font-weight: bold;
     }
 
-    .comment-area {
+    .commentArea {
         margin: 2rem;
         text-align: left;
     }

@@ -6,6 +6,7 @@
 
 <style lang="scss">
     footer {
+        text-align: center;
         font-weight: bold;
         padding: 1rem;
         background-color: #474747;

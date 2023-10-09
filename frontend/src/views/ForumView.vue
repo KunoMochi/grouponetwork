@@ -1,15 +1,15 @@
 <template>
     <div class="forum">
+        <h1>Recent Topics</h1>
         <div class="post-button">
-            <button>Create a Post</button>
+            <router-link to="/post">Create a Post</router-link>
         </div>
-        <h1>This is the Forum page</h1>
         <CommentBox class="comment-box"/>
     </div>
 </template>
 
 <script setup>
-    import CommentBox from '../components/CommentBox.vue'
+    import CommentBox from '@/components/CommentBox.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -28,10 +28,12 @@
 
     .post-button {
         text-align: left;
+        margin: 1rem;
 
-        button {
+        a {
             font-weight: bold;
-            padding: .5rem;
+            color: white;
+            text-decoration: none;
         }
     }
 </style>

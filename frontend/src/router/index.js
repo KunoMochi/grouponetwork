@@ -13,6 +13,11 @@ const routes = [
     component: () => import('../views/ForumView.vue')
   },
   {
+    path: '/post',
+    name: 'post',
+    component: () => import('../views/PostView.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting

@@ -3,7 +3,7 @@
     <h1>Welcome to the GroupoNetwork!</h1>
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <CommentBox class="comment-box"/>
+    <CommentBox class="commentBox"/>
   </div>
 </template>
 
@@ -24,19 +24,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    h1 {
-      text-align: center;
-    }
+  .home {
+    padding: 1rem;
+  }
 
-    div {
-        width: 100%;
-        padding: 1rem;
-    }
+  h1 {
+    text-align: center;
+  }
 
-    .comment-box {
-        position: absolute;
-        width: 80%;
-        background-color: #474747;
-        padding: 1rem;
-    }
+  div {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .commentBox {
+    margin: 1rem;
+  }
 </style>

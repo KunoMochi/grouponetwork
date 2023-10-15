@@ -1,27 +1,24 @@
 <template>
-    <form class="signup" v-on:submit.prevent="onSignUp({ username: username, password: password, confPass: confPass})">
+    <form class="signup" v-on:submit.prevent="onSignUp({ username, password, confPass })">
         <h1>Create an Account</h1>
         <div class="username">
             <p>New Username</p>
-            <input v-model="username" class="username-box" id="username" />
+            <input v-model="username" class="username-box" />
         </div>
         <div class="password">
             <p><label for="password">New Password</label></p>
-            <input v-model="password" type="password" class="password-box" id="password" />
+            <input v-model="password" type="password" class="password-box" />
         </div>
         <div class="password">
             <p><label for="password">Confirm Password</label></p>
             <input v-model="confPass" type="password" class="confirm-password-box" />
         </div>
-        <div class="username-error" v-show="showModal1">
-            <p>Username is required!</p>
-        </div>
-        <div class="pass-error" v-show="showModal2">
-            <p>Password does not match!</p>
-        </div>
         <div>
             <router-link to="/login">Existing User?</router-link> | 
             <button type="submit">Create Account</button>
+        </div>
+        <div class="error">
+            <p>{{ errorMessage }}</p>
         </div>
     </form>
 </template>
@@ -38,16 +35,19 @@ export default {
         }
     },
     computed: {
-        ...mapState(['showModal1','showModal2']),
-        ...mapGetters(['getAuth','getUserId'])
+        ...mapState(['errorMessage']),
+        ...mapGetters(['getIsAuth','getUserId'])
     },
     watch: {
-        getAuth() {
+        getIsAuth() {
             this.$router.push('/')
         }
     },
     methods: {
-        ...mapActions(['onSignUp'])
+        ...mapActions(['onSignUp','resetPage'])
+    },
+    beforeRouteLeave() {
+        this.resetPage()
     }
 }
 </script>
@@ -69,14 +69,12 @@ export default {
         width: 30rem;
     }
 
-    .username-error, .pass-error {
+    .error {
         color: red;
+        font-weight: bold;
     }
 
     a {
         font-size: small;
-        font-weight: bold;
-        color: white;
-        text-decoration: none;
     }
 </style>

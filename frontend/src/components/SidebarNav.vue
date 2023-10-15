@@ -16,13 +16,13 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     aside {
         text-align: left;
         display: flex;
         flex-direction: column;
         width: calc(4rem + 32px);
-        min-height: calc(100vh - 162px);
+        min-height: calc(100vh - 200px);
         overflow: hidden;
         padding: 1rem;
 

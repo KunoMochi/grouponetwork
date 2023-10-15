@@ -11,7 +11,7 @@
             <router-link to="/profile" class="greet">Hi, {{ username }}!</router-link> | 
             <router-link to="/" class="logout" @click="onLogOut()">Log Out</router-link>
         </div>
-        <div v-else class="user-controls">
+        <div class="user-controls" v-else>
             <router-link to="/login">Login</router-link> | 
             <router-link to="/signup">Sign up</router-link>
         </div>
@@ -24,7 +24,12 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
     computed: {
         ...mapState(['isAuth','username']),
-        ...mapGetters(['getAuth','getUserId','getUserName'])
+        ...mapGetters(['getIsAuth','getUserId','getUserName'])
+    },
+    watch: {
+        getIsAuth() {
+            this.$router.push('/')
+        }
     },
     methods: {
         ...mapActions(['onLogOut'])
@@ -32,12 +37,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     nav {
         display: flex;
         text-align: left;
         background-color: #474747;
         padding: 1rem;
+        font-weight: bold;
+        color: white;
         font-weight: bold;
         color: white;
         
@@ -64,6 +71,8 @@ export default {
         }
     }
 
+    .user-head, .user-controls {
+        text-align: right;
     .user-head, .user-controls {
         text-align: right;
         min-width: fit-content;

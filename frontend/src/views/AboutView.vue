@@ -5,9 +5,9 @@
 </template>
 
 <style lang="scss" scoped>
-    div {
-        width: 100%;
-        text-align: center;
-        padding: 1rem;
-    }
+  div {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+  }
 </style>

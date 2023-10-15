@@ -1,7 +1,7 @@
 <template>
     <div class="post">
-        <h1>Start a New Topic</h1>
-        <CommentBox class="post-box"/>
+        <h1>Create Post</h1>
+        <CommentBox class="postBox"/>
     </div>
 </template>
 
@@ -12,23 +12,11 @@
 <style lang="scss" scoped>
     .post{
         width: 100%;
-        text-align: center;
-        padding: 1rem;
-    }
-
-    .post-box {
-        position: absolute;
-        width: 80%;
-        background-color: #474747;
-        padding: 1rem;
-    }
-
-    .post-button {
         text-align: left;
+        padding: 1rem;
+    }
 
-        button {
-            font-weight: bold;
-            padding: .5rem;
-        }
+    .postBox {
+        margin: 1rem;
     }
 </style>

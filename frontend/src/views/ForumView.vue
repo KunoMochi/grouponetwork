@@ -1,10 +1,8 @@
 <template>
     <div class="forum">
         <h1>Recent Topics</h1>
-        <div class="post-button">
-            <router-link to="/post">Create a Post</router-link>
-        </div>
-        <CommentBox class="comment-box"/>
+        <router-link class="postLink" to="/post">Create a Post</router-link>
+        <CommentBox class="comment"/>
     </div>
 </template>
 
@@ -13,28 +11,25 @@
 </script>
 
 <style lang="scss" scoped>
-    .forum{
+    .forum {
         width: 100%;
-        text-align: center;
-        padding: 1rem;
-    }
-
-    .comment-box {
-        position: absolute;
-        width: 80%;
-        background-color: #474747;
-        padding: 1rem;
-    }
-
-    .post-button {
         text-align: left;
-        margin: 1rem;
+        padding: 1rem;
+    }
 
-        a {
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
+    .postLink {
+        padding: 5px;
+        background-color: #474747;
+        text-align: left;
+        font-size: large;
+    }
+
+    .postLink:hover {
+        background-color: #3b3b3b;
+    }
+
+    .comment {
+        margin: 1rem;
     }
 </style>
   

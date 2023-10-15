@@ -25,13 +25,14 @@
   color: white;
 }
 
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
 .app {
   display: flex;
   background-color: #5a5a5a;
-
-  main {
-    flex: 1 1 0;
-    padding: 2rem;
-  }
 }
 </style>

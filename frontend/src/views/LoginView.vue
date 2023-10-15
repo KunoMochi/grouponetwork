@@ -1,5 +1,5 @@
 <template>
-    <form class="login" v-on:submit.prevent="onLogin({ username: username, password: password})">
+    <form class="login" v-on:submit.prevent="onLogin({ username, password })">
         <h1>Welcome back!</h1>
         <div class="username">
             <p><label> Username</label></p>
@@ -9,15 +9,12 @@
             <p><label>Password</label></p>
             <input v-model="password" class="password-box" id="password" type="password">
         </div>
-        <div class="username-error" v-show="showModal1">
-            <p>Username required!</p>
-        </div>
-        <div class="pass-error" v-show="showModal2">
-            <p>Password required!</p>
-        </div>
         <div>
             <button type="submit">Login</button> | 
             <router-link to="/signup">Create an account</router-link>
+        </div>
+        <div class="error">
+            <p>{{ errorMessage }}</p>
         </div>
     </form>
 </template>
@@ -33,16 +30,19 @@ export default {
         }
     },
     computed: {
-        ...mapState(['showModal1','showModal2']),
-        ...mapGetters(['getAuth','getUserId'])
+        ...mapState(['errorMessage']),
+        ...mapGetters(['getIsAuth','getUserId'])
     },
     watch: {
-        getAuth() {
+        getIsAuth() {
             this.$router.push('/')
         }
     },
     methods: {
-        ...mapActions(['onLogin'])
+        ...mapActions(['onLogin', 'resetPage'])
+    },
+    beforeRouteLeave() {
+        this.resetPage()
     }
 }
 </script>
@@ -64,14 +64,12 @@ export default {
         width: 30rem;
     }
 
-    .username-error, .pass-error {
+    .error {
         color: red;
+        font-weight: bold;
     }
 
     a {
         font-size: small;
-        font-weight: bold;
-        color: white;
-        text-decoration: none;
     }
 </style>

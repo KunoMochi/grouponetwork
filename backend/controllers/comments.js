@@ -1,13 +1,14 @@
 const mssql = require('mssql')
 
-exports.findAllComments = (req, res, next) => {
+exports.findAllTopics = (req, res, next) => {
 	const db = req.app.locals.db;
-
-  db.query('SELECT * FROM Comments', function(err, result) {
+db.query('EXECUTE FindAllTopics', function(err, result) {
+  // db.query('EXECUTE FindAllTopics', function(err, result) {
     if (err) {
       console.error(err)
       return res.status(500).json({ error: err })
     }
+    console.log(result.recordset)
     res.status(200).json(result.recordset)
   });
 }

@@ -11,7 +11,9 @@ const commentModule = {
     
   },
   mutations: {
-
+    storeQuery(state, payload) {
+      state.query = payload.query
+    }
   },
   actions: {
     postComment(context, data) {
@@ -54,9 +56,6 @@ export default createStore({
     },
     getUserId(state) {
       return state.userId
-    },
-    getUserName(state) {
-      return state.username
     },
     getUserName(state) {
       return state.username

@@ -73,8 +73,6 @@ export default {
 
     .user-head, .user-controls {
         text-align: right;
-    .user-head, .user-controls {
-        text-align: right;
         min-width: fit-content;
     }
 </style>

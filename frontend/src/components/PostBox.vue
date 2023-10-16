@@ -1,5 +1,5 @@
 <template>
-    <form class="commentBox" v-on:submit.prevent="postComment({ userId, title, content, timestamp})">
+    <form class="commentBox" v-on:submit.prevent="onSubmit({ userId, title, content, timestamp})">
         <div class="commentHead">
             <p class="title">Title</p>
             <input v-model="title" class="titlebox" placeholder="Enter a title"/>
@@ -33,10 +33,18 @@ export default {
         ...mapGetters(['getIsAuth','getUserId'])
     },
     methods: {
-        ...mapActions(['postComment', 'resetPage'])
+        ...mapActions(['getAllTopics', 'postComment', 'resetPage']),
+        onSubmit({userId, title, content, timestamp}) {
+            this.postComment({userId, title, content, timestamp}).then(() => {
+                this.$router.push('/forum')
+            }).catch(err => {
+                console.log(err)
+            })
+        }
     },
     beforeRouteLeave() {
         this.resetPage()
+        this.getAllTopics()
     }
 }
 </script>

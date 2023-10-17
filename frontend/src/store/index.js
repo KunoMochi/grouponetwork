@@ -11,9 +11,7 @@ const commentModule = {
     
   },
   mutations: {
-    storeQuery(state, payload) {
-      state.query = payload.query
-    }
+
   },
   actions: {
     postComment(context, data) {
@@ -36,6 +34,35 @@ const commentModule = {
         context.commit('changeMessage', {message: 'Please log in before making a post!'})
       }
     },
+    editComment(context, data) {
+      if(context.getters.getIsAuth) {
+        if(data.userid == context.getters.getUserId) {
+          axios.post('http://localhost:3000/api/editComment', {
+            commentid: data.commentid,
+            userid: data.userid,
+            content: data.content
+          }).catch(err => {
+            console.log(err)
+          })
+        } else {
+          console.log('User not authorized')
+        }
+      }
+    },
+    deleteComment(context, data) {
+      if(context.getters.getIsAuth) {
+        if(data.userid == context.getters.getUserId) {
+          axios.post('http://localhost:3000/api/deleteComment', {
+            commentid: data.commentid,
+            userid: data.userid
+          }).catch(err => {
+            console.log(err)
+          })
+        } else {
+          console.log('User not authorized')
+        }
+      }
+    }
   }
 }
 
@@ -105,20 +132,6 @@ export default createStore({
                 userId: response.data.userId,
                 username: data.username
               })
-
-              // axios.post('http://localhost:3000/api/auth/login', {
-              //   username: data.username,
-              //   password: data.password
-              // }).then((response) => {
-              //   // console.log(response.data)
-              //   context.commit('loginUser', {
-              //     token: response.data.token,
-              //     userId: response.data.userId,
-              //     username: data.username
-              //   })
-              // }).catch(err => {
-              //   console.log(err)
-              // })
             }
             ).catch(err => {
               console.log(err)

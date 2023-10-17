@@ -4,7 +4,8 @@ const router = express.Router();
 
 const commentCtrl = require('../controllers/comments');
 
-router.get('/findAllTopics', commentCtrl.findAllTopics);
+router.get('/findAllComments', commentCtrl.findAllComments);
+router.get('/findRecentComments', commentCtrl.findRecentComments);
 router.post('/findComment', commentCtrl.findComment);
 router.post('/addComment', commentCtrl.addComment);
 router.post('/editComment', commentCtrl.editComment);

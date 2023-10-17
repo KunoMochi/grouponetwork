@@ -33,7 +33,7 @@ export default {
         ...mapGetters(['getIsAuth','getUserId'])
     },
     methods: {
-        ...mapActions(['getAllTopics', 'postComment', 'resetPage']),
+        ...mapActions(['postComment', 'resetPage']),
         onSubmit({userId, title, content, timestamp}) {
             this.postComment({userId, title, content, timestamp}).then(() => {
                 this.$router.push('/forum')
@@ -44,7 +44,6 @@ export default {
     },
     beforeRouteLeave() {
         this.resetPage()
-        this.getAllTopics()
     }
 }
 </script>

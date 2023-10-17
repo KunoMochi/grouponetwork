@@ -1,59 +1,63 @@
 <template>
-    <div class="topicBox">
-        <label v-if="query === undefined">query is empty</label>
-        <div class="commentBox" v-for="topic in query" :key="topic.CommentID">
-            <div class="commentTitle">{{ topic.Title }}</div>
+    <div class="topicBox" :key="componentKey">
+        <div class="commentBox">
+            <div class="commentTitle">{{ postTitle }}</div>
             <div class="commentHead">
-                <span><router-link class="userId" to="/profile">{{ topic.UserName }}</router-link></span>
+                <span><router-link class="userId" to="/profile">{{ postUsername }}</router-link></span>
                 <span class="commentSpacer"></span>
-                <span class="commentID">{{ topic.CommentID }}</span>
+                <span class="commentID">{{ postCommentId }}</span>
             </div>
-            <div class="commentArea">{{ topic.PostContent }}</div>
-            <div><p class="timeStamp">Posted {{ formatDate(topic.Timestamp) }}</p></div>
+            <div class="commentArea">
+                <textarea v-if="editModal" v-model="content" class="textbox" autocorrect="on"></textarea>
+                <div v-else>{{ tempPostContent }}</div>
+            </div>
+            <div><p class="timeStamp">Posted {{ formatDate(postTimestamp) }}</p></div>
+            <div v-if="postUserId == userId" class="commentCtrl">
+                <div v-if="editModal">
+                    <router-link class="submitButton" to="/forum" @click="onSubmit({ commentid: postCommentId, userid: postUserId, content: content })">Submit</router-link>
+                    <router-link class="cancelButton" to="" @click="toggleEdit()">Cancel</router-link>
+                </div>
+                <div v-else>
+                    <router-link class="editButton" to="" @click="toggleEdit(tempPostContent)">Edit</router-link>
+                    <router-link class="deleteButton" to="" @click="deleteComment({ commentid: postCommentId, userid: postUserId })">Delete</router-link>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- <div class="commentBox">
-        <div class="commentHead">
-            <span><router-link class="userId" to="/profile">[Username1234]</router-link></span>
-            <span class="commentSpacer"></span>
-            <span class="commentID">24</span>
-        </div>
-        <div class="commentArea">This is where the post lives</div>
-        <div><p class="timeStamp">Posted XXXX ago</p></div>
-    </div> -->
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import axios from 'axios'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import moment from 'moment'
 
 export default {
+    props: ['postCommentId', 'postUserId', 'postUsername', 'postTitle', 'postContent','postTimestamp', 'url', 'modal'],
     data() {
         return {
-            query: ''
+            tempPostContent: this.postContent,
+            editModal: this.modal
         }
     },
     computed: {
-        ...mapState(['username', 'query']),
+        ...mapState(['userId']),
         ...mapGetters(['getIsAuth','getUserId','getUserName'])
     },
     methods: {
-        getAllTopics() {
-            axios('http://localhost:3000/api/findAllTopics').then((result) => {
-                this.query = result.data
-                console.log(result.data)
-                // context.commit('storeQuery', result.data)
-            })
+        ...mapActions(['editComment', 'deleteComment']),
+        onSubmit(data) {
+            this.editComment(data)
+            this.tempPostContent = data.content
+            this.editModal = !this.editModal
+        },
+        toggleEdit(data) {
+            this.content = data
+            this.editModal = !this.editModal
         },
         formatDate (value) {
             if (value) {
                 return moment(String(value)).format('MMM DD, yyyy h:mm A')
             }
         }
-    },
-    beforeMount() {
-        this.getAllTopics()
     }
 }
 </script>
@@ -101,5 +105,28 @@ export default {
     .commentArea {
         margin: 2rem;
         text-align: left;
+    }
+
+    .commentCtrl {
+        text-align: right;
+    }
+
+    .editButton, .deleteButton, .submitButton, .cancelButton {
+        padding: 5px;
+        margin: 5px;
+        background-color: #5a5a5a;
+        text-align: left;
+        font-size: medium;
+    }
+
+    .textbox {
+        font-size: medium;
+        text-align: left;
+        border: 1px solid;
+        width: 100%;
+        color: white;
+        background: #5a5a5a;
+        resize: none;
+        height: 20rem;
     }
 </style>

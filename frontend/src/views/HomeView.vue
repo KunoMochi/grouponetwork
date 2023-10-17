@@ -3,7 +3,17 @@
     <h1>Welcome to the GroupoNetwork!</h1>
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <CommentBox class="commentBox"/>
+    <label v-if="query === undefined">Query is empty</label>
+    <CommentBox class="comment" 
+      v-for="topic in query" 
+      :key="topic.CommentID" 
+      :postCommentId="topic.CommentID" 
+      :postUserId="topic.UserID" 
+      :postUsername="topic.UserName" 
+      :postTitle="topic.Title" 
+      :postContent="topic.PostContent" 
+      :postTimestamp="topic.Timestamp" 
+      :modal="false"/>
   </div>
 </template>
 
@@ -12,19 +22,32 @@
 </script>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+import axios from 'axios'
 
 export default {
-  name: 'HomeView',
-  // components: {
-  //   HelloWorld
-  // }
+  data() {
+    return {
+      query: ''
+    }
+  },
+  methods: {
+    getAllTopics() {
+      axios('http://localhost:3000/api/findRecentComments').then((result) => {
+          this.query = result.data
+          console.log(result.data)
+          // context.commit('storeQuery', result.data)
+      })
+    },
+  },
+  beforeMount() {
+      this.getAllTopics()
+  }
 }
 </script>
 
 <style lang="scss" scoped>
   .home {
+    width: 100%;
     padding: 1rem;
   }
 
@@ -32,12 +55,7 @@ export default {
     text-align: center;
   }
 
-  div {
-    width: 100%;
-    padding: 1rem;
-  }
-
-  .commentBox {
+  .comment {
     margin: 1rem;
   }
 </style>

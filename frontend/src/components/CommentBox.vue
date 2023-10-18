@@ -1,5 +1,5 @@
 <template>
-    <div class="topicBox" :key="componentKey">
+    <div class="topicBox">
         <div class="commentBox">
             <div class="commentTitle">{{ postTitle }}</div>
             <div class="commentHead">
@@ -12,9 +12,9 @@
                 <div v-else>{{ tempPostContent }}</div>
             </div>
             <div><p class="timeStamp">Posted {{ formatDate(postTimestamp) }}</p></div>
-            <div v-if="postUserId == userId" class="commentCtrl">
+            <div v-if="postUserId == userId && this.isAllowed" class="commentCtrl">
                 <div v-if="editModal">
-                    <router-link class="submitButton" to="/forum" @click="onSubmit({ commentid: postCommentId, userid: postUserId, content: content })">Submit</router-link>
+                    <router-link class="submitButton" to="" @click="onSubmit({ commentid: postCommentId, userid: postUserId, content: content })">Submit</router-link>
                     <router-link class="cancelButton" to="" @click="toggleEdit()">Cancel</router-link>
                 </div>
                 <div v-else>
@@ -31,7 +31,14 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import moment from 'moment'
 
 export default {
-    props: ['postCommentId', 'postUserId', 'postUsername', 'postTitle', 'postContent','postTimestamp', 'url', 'modal'],
+    props: [
+        'postCommentId',
+        'postUserId',
+        'postUsername',
+        'postTitle',
+        'postContent',
+        'postTimestamp',
+        'modal'],
     data() {
         return {
             tempPostContent: this.postContent,
@@ -39,7 +46,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['userId']),
+        ...mapState(['userId','isAllowed']),
         ...mapGetters(['getIsAuth','getUserId','getUserName'])
     },
     methods: {
@@ -66,6 +73,7 @@ export default {
     .commentBox {
         max-width: 1000px;
         background-color: #474747;
+        border-radius: 5px;
         padding: 1rem;
         margin: 1rem;
     }
@@ -112,9 +120,10 @@ export default {
     }
 
     .editButton, .deleteButton, .submitButton, .cancelButton {
-        padding: 5px;
+        padding: 5px 10px;
         margin: 5px;
         background-color: #5a5a5a;
+        border-radius: 5px;
         text-align: left;
         font-size: medium;
     }

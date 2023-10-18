@@ -1,8 +1,6 @@
 <template>
   <div class="home">
     <h1>Welcome to the GroupoNetwork!</h1>
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <label v-if="query === undefined">Query is empty</label>
     <CommentBox class="comment" 
       v-for="topic in query" 
@@ -34,8 +32,6 @@ export default {
     getAllTopics() {
       axios('http://localhost:3000/api/findRecentComments').then((result) => {
           this.query = result.data
-          console.log(result.data)
-          // context.commit('storeQuery', result.data)
       })
     },
   },

@@ -31,6 +31,10 @@ a {
   color: white;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 .app {
   display: flex;
   background-color: #5a5a5a;

@@ -6,9 +6,6 @@
         <div class="forum">
             <router-link to="/forum">Forum</router-link>
         </div>
-        <div class="profile">
-            <router-link to="/profile">Profile</router-link>
-        </div>
     </aside>
 </template>
 

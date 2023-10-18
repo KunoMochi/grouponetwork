@@ -52,6 +52,7 @@ export default {
     .commentBox {
         max-width: 1000px;
         background-color: #474747;
+        border-radius: 5px;
         padding: 01rem;
     }
 
@@ -86,9 +87,11 @@ export default {
     .postButton {
         border: none;
         background: #5a5a5a;
+        border-radius: 5px;
         color: white;
         font-weight: bold;
-        padding: 10px;
+        font-size: medium;
+        padding: 5px 10px;
     }
 
     .postButton:hover {

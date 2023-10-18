@@ -13,9 +13,9 @@
             <p><label for="password">Confirm Password</label></p>
             <input v-model="confPass" type="password" class="confirm-password-box" />
         </div>
-        <div>
+        <div class="signupCtrl">
             <router-link to="/login">Existing User?</router-link> | 
-            <button type="submit">Create Account</button>
+            <button class="signupButton" type="submit">Create Account</button>
         </div>
         <div class="error">
             <p>{{ errorMessage }}</p>
@@ -65,16 +65,21 @@ export default {
     }
     
     input {
-        font-size: medium;
+        padding: 2px;
         width: 30rem;
+    }
+
+    .signupCtrl {
+        padding: 1rem;
+    }
+
+    .signupButton {
+        padding: 2px 5px;
+        font-weight: bold;
     }
 
     .error {
         color: red;
         font-weight: bold;
-    }
-
-    a {
-        font-size: small;
     }
 </style>

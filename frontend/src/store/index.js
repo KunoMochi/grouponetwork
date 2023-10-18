@@ -72,6 +72,7 @@ export default createStore({
     isAuth: sessionStorage.getItem('auth'),
     userId: sessionStorage.getItem('userId'),
     username: sessionStorage.getItem('username'),
+    isAllowed: false,
     errorMessage: ''
   },
   getters: {
@@ -110,6 +111,9 @@ export default createStore({
     },
     changeMessage (state, payload) {
       state.errorMessage = payload.message
+    },
+    changeAllowed (state, payload) {
+      state.isAllowed = payload.isAllowed
     }
   },
   actions: {

@@ -1,7 +1,7 @@
 <template>
     <div class="forum">
         <h1>Recent Topics</h1>
-        <router-link class="postLink" to="/post">Create a Post</router-link>
+        <router-link class="postLink" to="/post">Create Topic</router-link>
         <label v-if="query === undefined">Query is empty</label>
         <CommentBox class="comment" 
             v-for="topic in query" 
@@ -21,26 +21,33 @@
 </script>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 import axios from 'axios'
 
 export default {
-  data() {
-    return {
-        query: ''
-    }
-  },
-  methods: {
-    getAllTopics() {
-      axios('http://localhost:3000/api/findRecentComments').then((result) => {
-          this.query = result.data
-          console.log(result.data)
-          // context.commit('storeQuery', result.data)
-      })
+    data() {
+        return {
+            query: ''
+        }
     },
-  },
-  beforeMount() {
-      this.getAllTopics()
-  }
+    computed: {
+        ...mapState(['userId','isAllowed']),
+    },
+    methods: {
+        ...mapMutations([['changeAllowed']]),
+        getAllTopics() {
+            axios('http://localhost:3000/api/findAllComments').then((result) => {
+                this.query = result.data
+            })
+        },
+    },
+    beforeMount() {
+        this.$store.commit('changeAllowed', { isAllowed: true })
+        this.getAllTopics()
+    },
+    beforeUnmount() {
+        this.$store.commit('changeAllowed', { isAllowed: false })
+    }
 }
 </script>
 
@@ -52,8 +59,9 @@ export default {
     }
 
     .postLink {
-        padding: 5px;
+        padding: 5px 10px;
         background-color: #474747;
+        border-radius: 5px;
         text-align: left;
         font-size: large;
     }

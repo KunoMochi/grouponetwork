@@ -9,8 +9,8 @@
             <p><label>Password</label></p>
             <input v-model="password" class="password-box" id="password" type="password">
         </div>
-        <div>
-            <button type="submit">Login</button> | 
+        <div class="loginCtrl">
+            <button class="loginButton" type="submit">Login</button> | 
             <router-link to="/signup">Create an account</router-link>
         </div>
         <div class="error">
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    div .login {
+    .login {
         width: 100%;
         text-align: center;
         padding: 1rem;
@@ -59,8 +59,8 @@ export default {
         margin-top: 2rem;
     }
     
-    input {
-        font-size: medium;
+    .username-box, .password-box {
+        padding: 2px;
         width: 30rem;
     }
 
@@ -69,7 +69,12 @@ export default {
         font-weight: bold;
     }
 
-    a {
-        font-size: small;
+    .loginCtrl {
+        padding: 1rem;
+    }
+
+    .loginButton {
+        padding: 2px 5px;
+        font-weight: bold;
     }
 </style>

@@ -7,8 +7,8 @@
             <input class="search-box" />
             <button class="search-button">Search</button>
         </div>
-        <div class="user-head" v-if="isAuth">
-            <router-link to="/profile" class="greet">Hi, {{ username }}!</router-link> | 
+        <div class="user-head" v-if="getIsAuth">
+            <router-link :to="{ name: 'profile', params: { id: getUserId } }" class="greet">Hi, {{ getUserName }}!</router-link> | 
             <router-link to="/" class="logout" @click="onLogOut()">Log Out</router-link>
         </div>
         <div class="user-controls" v-else>
@@ -19,11 +19,10 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     computed: {
-        ...mapState(['isAuth','username']),
         ...mapGetters(['getIsAuth','getUserId','getUserName'])
     },
     watch: {

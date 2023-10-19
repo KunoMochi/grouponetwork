@@ -3,7 +3,7 @@
         <h1>Recent Topics</h1>
         <router-link class="postLink" to="/post">Create Topic</router-link>
         <label v-if="query === undefined">Query is empty</label>
-        <CommentBox class="comment" 
+        <TopicBox class="topic" 
             v-for="topic in query" 
             :key="topic.postCommentID" 
             :postCommentId="topic.CommentID" 
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-    import CommentBox from '../components/CommentBox.vue'
+    import TopicBox from '../components/TopicBox.vue'
 </script>
 
 <script>
@@ -36,17 +36,13 @@ export default {
     methods: {
         ...mapMutations([['changeAllowed']]),
         getAllTopics() {
-            axios('http://localhost:3000/api/findAllComments').then((result) => {
+            axios('http://localhost:3000/api/comments/findAllTopics').then((result) => {
                 this.query = result.data
             })
         },
     },
     beforeMount() {
-        this.$store.commit('changeAllowed', { isAllowed: true })
         this.getAllTopics()
-    },
-    beforeUnmount() {
-        this.$store.commit('changeAllowed', { isAllowed: false })
     }
 }
 </script>
@@ -61,17 +57,15 @@ export default {
     .postLink {
         padding: 5px 10px;
         background-color: #474747;
+        border: 1px solid #b9b9b9;
         border-radius: 5px;
+        text-decoration: none;
         text-align: left;
         font-size: large;
     }
 
     .postLink:hover {
         background-color: #3b3b3b;
-    }
-
-    .comment {
-        margin: 1rem;
     }
 </style>
   

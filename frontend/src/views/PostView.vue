@@ -9,6 +9,19 @@
     import CommentBox from '@/components/PostBox.vue'
 </script>
 
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+    methods: {
+        ...mapActions(['resetPage'])
+    },
+    beforeUnmount() {
+        this.resetPage()
+    }
+}
+</script>
+
 <style lang="scss" scoped>
     .post{
         width: 100%;

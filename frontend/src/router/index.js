@@ -3,39 +3,51 @@ import HomeView from '../views/HomeView.vue'
 
 const routes = [
   {
+    // Home page
     path: '/',
     name: 'home',
     component: HomeView
   },
   {
+    // Forum page
     path: '/forum',
     name: 'forum',
     component: () => import('../views/ForumView.vue')
   },
   {
+    // Topic page
+    path: '/topic/:id',
+    name: 'topic',
+    component: () => import('../views/TopicView.vue'),
+    props: true
+  },
+  {
+    // Post page
     path: '/post',
     name: 'post',
     component: () => import('../views/PostView.vue')
   },
   {
+    // About page
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import('../views/AboutView.vue')
   },
   {
-    path: '/profile',
+    // Profile page
+    path: '/profile/:id',
     name: 'profile',
-    component: () => import('../views/ProfileView.vue')
+    component: () => import('../views/ProfileView.vue'),
+    props: true
   },
   {
+    // Signup page
     path: '/signup',
     name: 'signup',
     component: () => import('../views/SignupView.vue')
   },
   {
+    // Login page
     path: '/login',
     name: 'login',
     component: () => import('../views/LoginView.vue')

@@ -2,7 +2,7 @@
   <div class="home">
     <h1>Welcome to the GroupoNetwork!</h1>
     <label v-if="query === undefined">Query is empty</label>
-    <CommentBox class="comment" 
+    <TopicBox class="topic" 
       v-for="topic in query" 
       :key="topic.CommentID" 
       :postCommentId="topic.CommentID" 
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-    import CommentBox from '../components/CommentBox.vue'
+    import TopicBox from '../components/TopicBox.vue'
 </script>
 
 <script>
@@ -29,14 +29,14 @@ export default {
     }
   },
   methods: {
-    getAllTopics() {
-      axios('http://localhost:3000/api/findRecentComments').then((result) => {
+    getRecentTopics() {
+      axios('http://localhost:3000/api/comments/findRecentTopics').then((result) => {
           this.query = result.data
       })
     },
   },
   beforeMount() {
-      this.getAllTopics()
+      this.getRecentTopics()
   }
 }
 </script>
@@ -49,9 +49,5 @@ export default {
 
   h1 {
     text-align: center;
-  }
-
-  .comment {
-    margin: 1rem;
   }
 </style>

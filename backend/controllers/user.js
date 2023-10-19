@@ -13,14 +13,12 @@ exports.signup = (req, res, next) => {
 			ps.input('username', mssql.VarChar);
 			ps.input('password', mssql.VarChar);
 			ps.prepare('EXECUTE SignUp @username, @password', (err) => {
-			// db.query('EXECUTE SignUp (\'' + req.body.username + '\', \'' + hash + '\')', function(err) {
 				if (err) {
 					console.error(err)
 					return res.status(500).json({
 						error: err
 					});
 				}
-				// res.status(200).json({ message: 'User added!' })
 				
 				ps.execute({
 					username: req.body.username,
@@ -58,41 +56,6 @@ exports.signup = (req, res, next) => {
 				});
 			}
 		);
-
-	// db.query('SELECT UserName FROM Users WHERE UserName = \'' + req.body.username + '\'', (err, result) => {
-	// 	if (err) {
-	// 		return res.status(500).json({
-	// 			error: err
-	// 		});
-	// 	}
-
-	// 	const user = result.recordset[0]
-	// 	if (user.UserName) {
-	// 		return res.status(409).json({
-	// 			error: err,
-	// 			message: 'User already exists!'
-	// 		});
-	// 	} else {
-	// 		bcrypt.hash(req.body.password, 10).then(
-	// 			(hash) => {
-	// 				db.query('INSERT INTO Users (UserName, Password) VALUES (\'' + req.body.username + '\', \'' + hash + '\')', function(err) {
-	// 					if (err) {
-	// 						console.error(err)
-	// 						return res.status(500).json({
-	// 							error: err
-	// 						});
-	// 					}
-	// 					res.status(200).json({ message: 'User added!' })
-	// 				})
-	// 			}).catch((err) => {
-	// 					res.status(500).json({
-	// 						error: err
-	// 					});
-	// 				}
-	// 			);
-
-	// 	}
-	// })
 };
 
 exports.login = (req, res, next) => {
@@ -101,7 +64,6 @@ exports.login = (req, res, next) => {
 
 	ps.input('username', mssql.VarChar);
 	ps.prepare('EXECUTE QueryUser @username', (err) => {
-	// db.query('SELECT * FROM Users WHERE UserName = \'' + req.body.username + '\'', function(err, result) {
 		if (err) {
 			return res.status(500).json({
 				error: err

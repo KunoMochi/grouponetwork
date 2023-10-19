@@ -1,4 +1,29 @@
+// controllers/comments.js
 const mssql = require('mssql')
+
+exports.findAllTopics = (req, res, next) => {
+	const db = req.app.locals.db;
+
+  db.query('EXECUTE FindAllTopics', function(err, result) {
+    if (err) {
+      console.error(err)
+      return res.status(500).json({ error: err })
+    }
+    res.status(200).json(result.recordset)
+  });
+}
+
+exports.findRecentTopics = (req, res, next) => {
+	const db = req.app.locals.db;
+
+  db.query('EXECUTE FindRecentTopics', function(err, result) {
+    if (err) {
+      console.error(err)
+      return res.status(500).json({ error: err })
+    }
+    res.status(200).json(result.recordset)
+  });
+}
 
 exports.findAllComments = (req, res, next) => {
 	const db = req.app.locals.db;
@@ -25,39 +50,61 @@ exports.findRecentComments = (req, res, next) => {
 }
 
 exports.findComment = (req, res, next) => {
-    const db = req.app.locals.db;
-    const ps = new mssql.PreparedStatement(db)
+  const db = req.app.locals.db;
+  const ps = new mssql.PreparedStatement(db)
 
-    ps.input('param', mssql.VarChar)
-    ps.prepare('SELECT @param FROM Comments', err => {
-		if (err) {
-		  console.error(err)
-		  res.status(500).send('SERVER ERROR')
-		  return
-		}
+  ps.input('commentid', mssql.Int)
+  ps.prepare('EXECUTE FindComment @commentid', (err) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send(err)
+    }
 
-        ps.execute({ param: req.body.search}, (err, result) => {
-            if (err) {
-              console.error(err)
-              res.status(500).json({
-                error: error
-              })
-              return
-            }
-		    res.status(200).json(result)
+    ps.execute({ commentid: req.params.id}, (err, result) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).json({ error: err })
+      }
+      res.status(200).json(result.recordset)
 
-            ps.unprepare(err => {
-                if (err) {
-                  console.error(err)
-                  res.status(500).json({
-                    error: error
-                  })
-                  return
-                }
-            })
-        })
+      ps.unprepare(err => {
+        if (err) {
+          console.error(err)
+          return res.status(500).json({ error: err })
+        }
+      })
     })
+  })
 }
+
+exports.findChildComments = (req, res, next) => {
+  const db = req.app.locals.db;
+  const ps = new mssql.PreparedStatement(db)
+
+  ps.input('parentid', mssql.Int)
+  ps.prepare('EXECUTE FindChildComments @parentid', (err) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send(err)
+    }
+
+    ps.execute({ parentid: req.params.id}, (err, result) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).json({ error: err })
+      }
+      res.status(200).json(result.recordset)
+
+      ps.unprepare(err => {
+        if (err) {
+          console.error(err)
+          return res.status(500).json({ error: err })
+        }
+      })
+    })
+  })
+}
+
 
 exports.addComment = (req, res, next) => {
   const db = req.app.locals.db;
@@ -67,35 +114,31 @@ exports.addComment = (req, res, next) => {
   ps.input('title', mssql.VarChar);
   ps.input('postContent', mssql.VarChar);
   ps.input('timestamp', mssql.DateTime);
+  ps.input('parentid', mssql.Int);
 
-  ps.prepare('EXECUTE AddComment @userid, @title, @postContent, @timestamp', err => {
+  ps.prepare('EXECUTE AddComment @userid, @title, @postContent, @timestamp, @parentid', (err) => {
 		  if (err) {
 		    console.error(err)
-        return res.status(500).json({
-          error: error
-        })
+        return res.status(500).json({ error: err })
       }
 
       ps.execute({
         userid: parseInt(req.body.userId),
         title: req.body.title,
         postContent: req.body.postContent,
-        timestamp: req.body.timestamp
+        timestamp: req.body.timestamp,
+        parentid: parseInt(req.body.parentId)
       }, (err) => {
         if (err) {
           console.error(err)
-          return res.status(500).json({
-            error: error
-          })
+          return res.status(500).json({ error: err })
         }
         
         res.status(200).json({ message: 'Comment Added!' })
         ps.unprepare(err => {
           if (err) {
             console.error(err)
-            return res.status(500).json({
-              error: error
-            })
+            return res.status(500).json({ error: err })
           }
         })
       })
@@ -110,13 +153,10 @@ exports.editComment = (req, res, next) => {
     ps.input('userid', mssql.Int)
     ps.input('content', mssql.VarChar)
 
-    ps.prepare('EXECUTE EditComment @commentid, @userid, @content', err => {
+    ps.prepare('EXECUTE EditComment @commentid, @userid, @content', (err) => {
       if (err) {
         console.error(err)
-            res.status(500).json({
-              error: error
-            })
-            return
+        return res.status(500).json({ error: err })
       }
 
       ps.execute({
@@ -126,21 +166,15 @@ exports.editComment = (req, res, next) => {
       }, (err, result) => {
           if (err) {
             console.error(err)
-            res.status(500).json({
-              error: error
-            })
-            return
+            return res.status(500).json({ error: err })
           }
           res.status(200).json(result.recordset)
           
           ps.unprepare(err => {
-              if (err) {
-                console.error(err)
-                res.status(500).json({
-                  error: error
-                })
-                return
-              }
+            if (err) {
+              console.error(err)
+              return res.status(500).json({ error: err })
+            }
           })
       })
     })
@@ -153,12 +187,10 @@ exports.deleteComment = (req, res, next) => {
   ps.input('commentid', mssql.Int);
   ps.input('userid', mssql.Int);
 
-  ps.prepare('EXECUTE DeleteComment @commentid, @userid', err => {
-		  if (err) {
-		    console.error(err)
-        return res.status(500).json({
-          error: error
-        })
+  ps.prepare('EXECUTE DeleteComment @commentid, @userid', (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).json({ error: err })
       }
 
       ps.execute({
@@ -167,21 +199,15 @@ exports.deleteComment = (req, res, next) => {
         }, (err, result) => {
           if (err) {
             console.error(err)
-            res.status(500).json({
-              error: error
-            })
-            return
+            return res.status(500).json({ error: err })
           }
           res.status(200).json(result.recordset[0])
           
           ps.unprepare(err => {
-              if (err) {
-                console.error(err)
-                res.status(500).json({
-                  error: error
-                })
-                return
-              }
+            if (err) {
+              console.error(err)
+              return res.status(500).json({ error: err })
+            }
           })
       })
     })

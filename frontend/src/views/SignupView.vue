@@ -46,7 +46,7 @@ export default {
     methods: {
         ...mapActions(['onSignUp','resetPage'])
     },
-    beforeRouteLeave() {
+    beforeUnmount() {
         this.resetPage()
     }
 }

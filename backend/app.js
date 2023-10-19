@@ -41,6 +41,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const userRoutes = require('./routes/user');
 const commentsRoutes = require('./routes/comments');
+const profilesRoutes = require('./routes/profiles');
 
 app.use('/*', (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -52,6 +53,7 @@ app.use('/*', (req, res, next) => {
 app.use(express.json());
 
 app.use('/api/auth', userRoutes);
-app.use('/api', commentsRoutes);
+app.use('/api/comments', commentsRoutes);
+app.use('/api/profiles', profilesRoutes);
 
 module.exports = app;

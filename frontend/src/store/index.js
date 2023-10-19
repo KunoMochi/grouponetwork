@@ -11,19 +11,45 @@ const commentModule = {
     
   },
   mutations: {
-
+    
   },
   actions: {
+    postReply(context, data) {
+      console.log(data)
+      if(context.getters.getIsAuth) {
+        if(data.content) {
+          if(data.parentId) {
+            axios.post('http://localhost:3000/api/comments/addComment', {
+              userId: data.userId,
+              title: data.title,
+              postContent: data.content,
+              timestamp: data.timestamp,
+              parentId: data.parentId
+            }).catch(err => {
+              console.log(err)
+            })
+            console.log('Success!')
+          } else {
+            context.commit('changeMessage', {message: 'Error retrieving parentID'})
+          }
+        } else {
+          context.commit('changeMessage', {message: 'Cannot send empty reply'})
+        }
+      } else {
+        context.commit('changeMessage', {message: 'Please log in before making a post!'})
+      }
+    },
     postComment(context, data) {
       console.log(data)
       if(context.getters.getIsAuth) {
         console.log(context.getters.getIsAuth)
         if(data.content && data.title) {
-          axios.post('http://localhost:3000/api/addComment', {
+          axios.post('http://localhost:3000/api/comments/addComment', {
             userId: data.userId,
             title: data.title,
             postContent: data.content,
-            timestamp: data.timestamp
+            timestamp: data.timestamp,
+            parentId: data.parentId
           }).catch(err => {
             console.log(err)
           })
@@ -37,7 +63,7 @@ const commentModule = {
     editComment(context, data) {
       if(context.getters.getIsAuth) {
         if(data.userid == context.getters.getUserId) {
-          axios.post('http://localhost:3000/api/editComment', {
+          axios.post('http://localhost:3000/api/comments/editComment', {
             commentid: data.commentid,
             userid: data.userid,
             content: data.content
@@ -52,7 +78,7 @@ const commentModule = {
     deleteComment(context, data) {
       if(context.getters.getIsAuth) {
         if(data.userid == context.getters.getUserId) {
-          axios.post('http://localhost:3000/api/deleteComment', {
+          axios.post('http://localhost:3000/api/comments/deleteComment', {
             commentid: data.commentid,
             userid: data.userid
           }).catch(err => {
@@ -121,7 +147,6 @@ export default createStore({
       let message = ''
       if(data.username) {
         if(data.password == data.confPass && data.password != undefined) {
-          // console.log('username: ' + this.username + ', password: ' + this.password)
 
           //Create user account
           axios.post('http://localhost:3000/api/auth/signup', {
@@ -154,17 +179,11 @@ export default createStore({
       let message = ''
       if(data.username) {
         if(data.password != undefined) {
-          // console.log('username: ' + data.username + ', password: ' + data.password)
           axios.post('http://localhost:3000/api/auth/login', {
               username: data.username,
               password: data.password
             }).then((response) => {
 
-              // sessionStorage.setItem('token', response.data.token)
-              // sessionStorage.setItem('userId', response.data.userId)
-              // sessionStorage.setItem('username', data.username)
-              // sessionStorage.setItem('auth', true)
-              // console.log(response.data)
               context.commit('loginUser', {
                 token: response.data.token,
                 userId: response.data.userId,

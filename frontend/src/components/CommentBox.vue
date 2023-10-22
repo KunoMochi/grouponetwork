@@ -6,7 +6,7 @@
         <div class="commentHead">
             <span><router-link class="userId" :to="{ name: 'profile', params: { id: postUserId } }">{{ postUsername }}</router-link></span>
             <span class="commentSpacer"></span>
-            <span class="commentID" hidden="true">{{ postCommentId }}</span>
+            <span :id="postCommentId" class="commentID" hidden="true">{{ postCommentId }}</span>
         </div>
         <div class="commentArea">
             <textarea v-if="editModal" v-model="content" id="commentText" class="textbox" autocorrect="on"></textarea>
@@ -20,7 +20,7 @@
             </div>
             <div v-else>
                 <router-link id="editButton" class="button" to="" @click="toggleEdit(tempPostContent)">Edit</router-link>
-                <router-link id="deleteButton" class="button" to="" @click="deleteComment({ commentid: postCommentId, userid: postUserId })">Delete</router-link>
+                <router-link id="deleteButton" class="button" to="" @click="onDelete({ commentid: postCommentId, userid: postUserId })">Delete</router-link>
             </div>
         </div>
         <div>
@@ -93,6 +93,11 @@ export default {
             this.editComment(data)
             this.tempPostContent = data.content
             this.editModal = !this.editModal
+            this.$route.go()
+        },
+        onDelete(data) {
+            this.deleteComment(data)
+            this.$route.go()
         },
         toggleEdit(data) {
             this.content = data
@@ -116,7 +121,7 @@ export default {
             if(this.getIsAuth) {
                 if(content != '') {
                     this.postReply({userId, title: null, content, timestamp, parentId}).then(() => {
-                        // this.$route.go()
+                        this.$route.go()
                     }).catch(err => {
                         console.log(err)
                     })
@@ -147,7 +152,7 @@ export default {
     .commentBox {
         max-width: 1000px;
         background-color: #474747;
-        border: 1px dotted white;
+        border: 1px solid #7c7c7c;
         border-radius: 5px;
         padding: 1rem;
         margin: 1rem;

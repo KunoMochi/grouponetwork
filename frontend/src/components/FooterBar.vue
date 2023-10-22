@@ -6,6 +6,7 @@
 
 <style lang="scss" scoped>
     footer {
+        border-radius: 0 5px 5px 5px;
         text-align: center;
         font-weight: bold;
         padding: 1rem;

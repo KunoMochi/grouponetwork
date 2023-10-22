@@ -1,8 +1,32 @@
 <template>
     <div class="profile">
-        <h1>{{ query.UserName }}'s Profile</h1>
+        <div class="title">
+            <span>
+                <h1>{{ query.UserName }}</h1>
+            </span>
+        </div>
+        <div>
+            <div class="comments">
+                <label v-if="!commentsQuery">There are no posts</label>
+                <CommentBox class="comment" 
+                    v-for="topic in commentsQuery" 
+                    :key="topic.postCommentID" 
+                    :postCommentId="topic.CommentID" 
+                    :postUserId="topic.UserID" 
+                    :postUsername="topic.UserName" 
+                    :postTitle="topic.Title" 
+                    :postContent="topic.PostContent" 
+                    :postTimestamp="topic.Timestamp" 
+                    :modal="false"
+                />
+            </div>
+        </div>
     </div>
 </template>
+
+<script setup>
+    import CommentBox from '../components/TopicBox.vue'
+</script>
 
 <script>
 import { mapState, mapMutations } from 'vuex';
@@ -12,7 +36,8 @@ export default {
     props: ['id'],
     data() {
         return {
-            query: ''
+            query: '',
+            commentsQuery: ''
         }
     },
     computed: {
@@ -25,10 +50,17 @@ export default {
                 console.log(result.data)
                 this.query = result.data
             })
+        },
+        findUserComments() {
+            axios('http://localhost:3000/api/comments/findUserComments/' + this.id).then((result) => {
+                console.log(result.data)
+                this.commentsQuery = result.data
+            })
         }
     },
     beforeMount() {
         this.findProfile()
+        this.findUserComments()
         this.$store.commit('changeAllowed', { isAllowed: true })
     },
     beforeUnmount() {
@@ -38,9 +70,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    div {
+    .profile {
         width: 100%;
-        text-align: center;
         padding: 1rem;
     }
+    
+    .title {
+        height: 5rem;
+        padding: 2rem;
+        background-color: #474747;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+    }
+
+    .comments {
+        max-width: 800px;
+        padding: 1rem;
+    }
+
+    // div {
+    //     border: 1px solid white;
+    // }
 </style>

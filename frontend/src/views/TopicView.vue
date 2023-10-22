@@ -44,8 +44,6 @@ export default {
             })
         }
     },
-    beforeRouteLeave() {
-    },
     beforeMount() {
         this.findComment()
         this.$store.commit('changeAllowed', { isAllowed: true })

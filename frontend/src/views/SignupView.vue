@@ -65,7 +65,12 @@ export default {
     }
     
     input {
-        padding: 2px;
+        font-size: medium;
+        border: 1px solid #7c7c7c;
+        border-radius: 5px;
+        background: #505050;
+        color: white;
+        padding: 5px;
         width: 30rem;
     }
 

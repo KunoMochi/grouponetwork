@@ -48,14 +48,16 @@ export default {
 
 <style lang="scss" scoped>
     .commentBox {
-        max-width: 1000px;
+        max-width: 800px;
         background-color: #474747;
+        border: 1px solid #7c7c7c;
         border-radius: 5px;
-        padding: 01rem;
+        padding: 1rem;
     }
 
     .commentHead, .commentArea {
         text-align: left;
+        // border: 1px solid white;
     }
 
     .title {
@@ -66,8 +68,10 @@ export default {
     .titlebox, .textbox {
         font-size: medium;
         text-align: left;
-        border: 1px solid;
-        width: 100%;
+        border: 1px solid #7c7c7c;
+        border-radius: 5px;
+        padding: 5px;
+        width: 98%;
         color: white;
         background: #5a5a5a;
     }
@@ -85,6 +89,7 @@ export default {
     .postButton {
         border: none;
         background: #5a5a5a;
+        border: 1px solid #b9b9b9;
         border-radius: 5px;
         color: white;
         font-weight: bold;

@@ -77,6 +77,34 @@ exports.findComment = (req, res, next) => {
   })
 }
 
+exports.findUserComments = (req, res, next) => {
+  const db = req.app.locals.db;
+  const ps = new mssql.PreparedStatement(db)
+
+  ps.input('userid', mssql.Int)
+  ps.prepare('EXECUTE FindUserComments @userid', (err) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send(err)
+    }
+
+    ps.execute({ userid: req.params.id}, (err, result) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).json({ error: err })
+      }
+      res.status(200).json(result.recordset)
+
+      ps.unprepare(err => {
+        if (err) {
+          console.error(err)
+          return res.status(500).json({ error: err })
+        }
+      })
+    })
+  })
+}
+
 exports.findChildComments = (req, res, next) => {
   const db = req.app.locals.db;
   const ps = new mssql.PreparedStatement(db)

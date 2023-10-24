@@ -35,7 +35,7 @@ export default {
     methods: {
         ...mapActions(['postComment', 'resetPage']),
         onSubmit({userId, title, content, timestamp}) {
-            this.postComment({userId, title, content, timestamp, parentId: null}).then((result) => {
+            this.postComment({userId, title, content, timestamp, images: null, parentId: null}).then((result) => {
                 if(result)
                     this.$router.push('/topic/' + result.data[0].CommentID)
             }).catch(err => {

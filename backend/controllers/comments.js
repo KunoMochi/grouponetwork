@@ -171,9 +171,10 @@ exports.addComment = (req, res, next) => {
   ps.input('title', mssql.VarChar);
   ps.input('postContent', mssql.VarChar);
   ps.input('timestamp', mssql.DateTime);
+  ps.input('images', mssql.VarChar);
   ps.input('parentid', mssql.Int);
 
-  ps.prepare('EXECUTE AddComment @userid, @title, @postContent, @timestamp, @parentid', (err) => {
+  ps.prepare('EXECUTE AddComment @userid, @title, @postContent, @timestamp, @images, @parentid', (err) => {
 		  if (err) {
 		    console.error(err)
         return res.status(500).json({ error: err })
@@ -184,6 +185,7 @@ exports.addComment = (req, res, next) => {
         title: req.body.title,
         postContent: req.body.postContent,
         timestamp: req.body.timestamp,
+        images: req.body.images,
         parentid: parseInt(req.body.parentId)
       }, (err) => {
         if (err) {

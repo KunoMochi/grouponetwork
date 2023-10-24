@@ -120,8 +120,8 @@ export default {
         onSend({userId, content, timestamp, parentId}) {
             if(this.getIsAuth) {
                 if(content != '') {
-                    this.postReply({userId, title: null, content, timestamp, parentId}).then(() => {
-                        this.$route.go()
+                    this.postReply({userId, title: null, content, timestamp, images: null, parentId}).then(() => {
+                        this.$route.push('*')
                     }).catch(err => {
                         console.log(err)
                     })

@@ -27,6 +27,7 @@ const commentModule = {
               title: data.title,
               postContent: data.content,
               timestamp: data.timestamp,
+              images: data.images,
               parentId: data.parentId
             }).catch(err => {
               console.log(err)
@@ -52,6 +53,7 @@ const commentModule = {
             title: data.title,
             postContent: data.content,
             timestamp: data.timestamp,
+            images: data.images,
             parentId: data.parentId
           }).catch(err => {
             console.log(err)

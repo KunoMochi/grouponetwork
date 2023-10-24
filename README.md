@@ -41,3 +41,9 @@ On the left in "Select a page", click on "User Mapping". Map the account to "Gro
 Once in, go to File > Open > File then find and select GroupDB.sql. Run the script to generate the GroupDB database.
 
 The SQL Server database should now be fully set up for the web app to use.
+
+-------------------------------
+Updating the SQL Server Database:
+-------------------------------
+
+Run the most current SQL script tp update the database.

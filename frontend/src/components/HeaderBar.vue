@@ -3,10 +3,10 @@
         <div class="logo">
             <img src="../assets/icon-left-font-monochrome-white-long.png" alt="Groupomania">
         </div>
-        <div class="searchBar">
-            <input class="search-box" />
-            <button class="search-button">Search</button>
-        </div>
+        <form class="searchBar" v-on:submit.prevent="onSearch({ query })">
+            <input class="search-box" v-model="query" />
+            <button class="search-button" type="submit">Search</button>
+        </form>
         <div class="user-group">
             <div class="user-head" v-if="getIsAuth">
                 <router-link :to="{ name: 'profile', params: { id: getUserId } }" class="greet">Hi, {{ getUserName }}!</router-link> | 
@@ -21,9 +21,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
+    data() {
+        return {
+            query: this.query
+        }
+    },
     computed: {
         ...mapGetters(['getIsAuth','getUserId','getUserName'])
     },
@@ -33,7 +38,14 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['onLogOut'])
+        ...mapMutations[('getSearchResults')],
+        ...mapActions(['onLogOut','findComments']),
+        onSearch(data) {
+            this.$router.go({
+                name: 'search',
+                query: data
+            })
+        }
     }
 }
 </script>

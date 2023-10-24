@@ -5,17 +5,20 @@ const commentModule = {
   state: {
     title: '',
     message: '',
-    timestamp: ''
+    timestamp: '',
+    searchResults: ''
   },
   getters: {
     
   },
   mutations: {
-    
+    getSearchResults(state, payload) {
+      state.searchResults = payload.inputQuery
+    }
   },
   actions: {
     postReply(context, data) {
-      console.log(data)
+      console.log("data: " + data)
       if(context.getters.getIsAuth) {
         if(data.content) {
           if(data.parentId) {

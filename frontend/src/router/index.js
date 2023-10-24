@@ -28,6 +28,12 @@ const routes = [
     component: () => import('../views/PostView.vue')
   },
   {
+    // Search Results page
+    path: '/search',
+    name: 'search',
+    component: () => import('../views/SearchResultsView.vue')
+  },
+  {
     // About page
     path: '/about',
     name: 'about',

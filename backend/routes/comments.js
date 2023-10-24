@@ -11,6 +11,7 @@ router.get('/findAllComments', commentCtrl.findAllComments);
 router.get('/findRecentComments', commentCtrl.findRecentComments);
 router.get('/findUserComments/:id', commentCtrl.findUserComments);
 router.get('/findComment/:id', commentCtrl.findComment);
+router.get('/findComments', commentCtrl.findComments);
 router.get('/findChildComments/:id', commentCtrl.findChildComments);
 
 router.post('/addComment', commentCtrl.addComment);

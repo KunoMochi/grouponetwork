@@ -77,6 +77,35 @@ exports.findComment = (req, res, next) => {
   })
 }
 
+exports.findComments = (req, res, next) => {
+  const db = req.app.locals.db;
+  const ps = new mssql.PreparedStatement(db)
+
+  console.log("query: " + req.query.query)
+  ps.input('queryParam', mssql.VarChar)
+  ps.prepare('EXECUTE FindComments @queryParam', (err) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send(err)
+    }
+
+    ps.execute({ queryParam: req.query.query}, (err, result) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).json({ error: err })
+      }
+      res.status(200).json(result.recordset)
+
+      ps.unprepare(err => {
+        if (err) {
+          console.error(err)
+          return res.status(500).json({ error: err })
+        }
+      })
+    })
+  })
+}
+
 exports.findUserComments = (req, res, next) => {
   const db = req.app.locals.db;
   const ps = new mssql.PreparedStatement(db)

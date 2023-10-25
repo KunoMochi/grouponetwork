@@ -5,13 +5,14 @@
         <label v-if="query === undefined">Query is empty</label>
         <TopicBox class="topic" 
             v-for="topic in query" 
-            :key="topic.postCommentID" 
+            :key="topic.CommentID" 
             :postCommentId="topic.CommentID" 
             :postUserId="topic.UserID" 
             :postUsername="topic.UserName" 
             :postTitle="topic.Title" 
             :postContent="topic.PostContent" 
             :postTimestamp="topic.Timestamp" 
+            :postRootId="topic.RootID"
             :modal="false"/>
     </div>
 </template>

@@ -16,7 +16,8 @@
                     :postUsername="topic.UserName" 
                     :postTitle="topic.Title" 
                     :postContent="topic.PostContent" 
-                    :postTimestamp="topic.Timestamp" 
+                    :postTimestamp="topic.Timestamp"
+                    :postRootId="topic.RootID" 
                     :modal="false"
                 />
             </div>

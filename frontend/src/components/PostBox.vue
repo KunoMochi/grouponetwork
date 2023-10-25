@@ -36,30 +36,6 @@ export default {
     methods: {
         ...mapActions(['resetPage']),
         ...mapMutations(['changeMessage']),
-        // postComment(context, data) {
-        //     console.log(data)
-        //     if(context.getters.getIsAuth) {
-        //         console.log(context.getters.getIsAuth)
-        //         if(data.content && data.title) {
-        //         axios.post('http://localhost:3000/api/comments/addComment', {
-        //             userId: data.userId,
-        //             title: data.title,
-        //             postContent: data.content,
-        //             timestamp: data.timestamp,
-        //             images: data.images,
-        //             parentId: data.parentId
-        //         }).then((result) => {
-        //             console.log(result)
-        //         }).catch(err => {
-        //             console.log(err)
-        //         })
-        //         } else {
-        //         this.changeMessage({message: 'Please fill in title and comment fields!'})
-        //         }
-        //     } else {
-        //         this.changeMessage({message: 'Please log in before making a post!'})
-        //     }
-        // },
         onSubmit({userId, title, content, timestamp}) {
             if(this.getIsAuth) {
                 console.log(this.getIsAuth)
@@ -70,7 +46,8 @@ export default {
                     postContent: content,
                     timestamp: timestamp,
                     images: null,
-                    parentId: null
+                    parentId: null,
+                    rootId: null
                 }).then((result) => {
                     console.log(result)
                     if(result) {
@@ -86,16 +63,6 @@ export default {
             } else {
                 this.changeMessage({message: 'Please log in before making a post!'})
             }
-        //     console.log(this.userId)
-        //     this.postComment({userId, title, content, timestamp, images: null, parentId: null}).then(() => {
-        //         console.log(this.searchResults)
-        //         if(this.searchResults.data) {
-        //             console.log(this.searchResults.data[0].CommentID)
-        //             this.$router.push('/topic/' + this.searchResults.data[0].CommentID)
-        //         }
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
         }
     }
 }

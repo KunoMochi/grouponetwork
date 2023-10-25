@@ -13,6 +13,14 @@
   import FooterBar from '@/components/FooterBar.vue'
 </script>
 
+<script>
+export default {
+  mounted() {
+    document.title = 'GroupoNetwork'
+  }
+}
+</script>
+
 <style lang="scss">
 :root {
   --sidebar-width: 300px;

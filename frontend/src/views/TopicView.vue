@@ -12,6 +12,7 @@
             :postContent="topic.PostContent" 
             :postTimestamp="topic.Timestamp"
             :postParentId="null"
+            :postRootId="topic.RootID"
             :errorMessage="this.errorMessage" 
             :modal="false"/>
     </div>

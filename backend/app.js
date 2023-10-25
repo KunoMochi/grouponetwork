@@ -29,16 +29,6 @@ appPool.connect().then(function(pool) {
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-// app.use('/', (req, res) => {
-//     app.locals.db.query('SELECT UserName FROM Users', function (err, result) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             res.status(200).json(result.recordset[0].UserName)
-//         }
-//     });
-// });
-
 const userRoutes = require('./routes/user');
 const commentsRoutes = require('./routes/comments');
 const profilesRoutes = require('./routes/profiles');

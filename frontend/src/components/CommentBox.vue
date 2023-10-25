@@ -29,7 +29,7 @@
                 <div class="replyArea">
                     <textarea v-model="replyContent" id="replyText" class="textbox" autocorrect="on"></textarea>
                 </div>
-                <router-link id="sendButton" class="button" :to="{ name: 'topic', params: {id: postCommentId } }" @click="onSend({ userId, content: replyContent, timestamp, parentId: postCommentId})">Send</router-link>
+                <router-link id="sendButton" class="button" :to="{ name: 'topic', params: {id: this.$route.params.id } }" @click="onSend({ userId, content: replyContent, timestamp, parentId: postCommentId })">Send</router-link>
                 <router-link id="replyButton" class="button" to="" @click="toggleReply">Cancel</router-link>
             </div>
         </div>
@@ -99,6 +99,9 @@ export default {
             this.resetPage()
             this.$router.push(`/`)
         },
+        onRoot(data) {
+            this.rootComment(data)
+        },
         toggleEdit(data) {
             this.content = data
             this.editModal = !this.editModal
@@ -115,10 +118,17 @@ export default {
         onSend({userId, content, timestamp, parentId}) {
             if(this.getIsAuth) {
                 if(content != '') {
-                    this.postReply({userId, title: null, content, timestamp, images: null, parentId}).then(() => {
-                        this.toggleReply()
-                        this.replyContent = ''
-                        // this.$router.push(`/topic/${this.$route.params.id}`)
+                    this.postReply({
+                        userId,
+                        title: null,
+                        content,
+                        timestamp,
+                        images: null,
+                        parentId,
+                        rootId: this.$route.params.id}).then(() => {
+                            this.toggleReply()
+                            this.replyContent = ''
+                            // this.$router.push(`/topic/${this.$route.params.id}`)
                     }).catch(err => {
                         console.log(err)
                     })
@@ -137,7 +147,7 @@ export default {
             })
         }
     },
-    beforeMount() {
+    created() {
         this.findChildComments()
     }
 }

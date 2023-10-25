@@ -28,7 +28,8 @@ const commentModule = {
               postContent: data.content,
               timestamp: data.timestamp,
               images: data.images,
-              parentId: data.parentId
+              parentId: data.parentId,
+              rootId: data.rootId
             // }).then((result) => {
             //   context.commit('getSearchResults', {inputQuery: result})
             }).catch(err => {
@@ -56,7 +57,8 @@ const commentModule = {
             postContent: data.content,
             timestamp: data.timestamp,
             images: data.images,
-            parentId: data.parentId
+            parentId: data.parentId,
+            rootId: data.rootId
           // }).then((result) => {
           //   console.log(result)
           //   context.commit('getSearchResults', {inputQuery: result})

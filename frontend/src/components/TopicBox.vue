@@ -1,6 +1,6 @@
 <template>
         <div class="topicBox">
-        <router-link class="topicLink" :to="{ name: 'topic', params: { id: postCommentId }}">
+        <router-link class="topicLink" :to="{ name: 'topic', params: { id: postRootId }}">
             <div class="topicLinkBox">
                 <div class="topicTitle">
                     <h2>{{ postTitle }}</h2>
@@ -31,6 +31,7 @@ export default {
         'postTitle',
         'postContent',
         'postTimestamp',
+        'postRootId',
         'modal'],
     data() {
         return {

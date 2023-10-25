@@ -1,34 +1,7 @@
 const http = require('http');
+// const https = require('https');
+// const fs = require('fs');
 const app = require('./app');
-const fs = require('fs');
-
-// app.use((req, res, next) => {
-//     const mssql = require('mssql');
-//     const sqlConfig = {
-//         user: 'GroupDBAdmin',
-//         password: 'ThisIs@Test',
-//         database: 'GroupDB',
-//         server: 'localhost',
-//         options: {
-//             encrypt: true,
-//             trustServerCertificate: true
-//         }
-//     };
-
-//     mssql.connect(sqlConfig, function (err) {
-//         if (err)
-//             console.log(err);
-    
-//         const request = new mssql.Request();
-
-//         request.query('select * from Users', function (err, recordset) {
-//             if (err)
-//                 console.log(err);
-
-//             res.send(recordset);
-//         });
-//     });
-// });
 
 const normalizePort = val => {
     const port = parseInt(val, 10);

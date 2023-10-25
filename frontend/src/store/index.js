@@ -18,7 +18,7 @@ const commentModule = {
   },
   actions: {
     postReply(context, data) {
-      console.log("data: " + data)
+      // console.log("data: " + data)
       if(context.getters.getIsAuth) {
         if(data.content) {
           if(data.parentId) {
@@ -29,6 +29,8 @@ const commentModule = {
               timestamp: data.timestamp,
               images: data.images,
               parentId: data.parentId
+            // }).then((result) => {
+            //   context.commit('getSearchResults', {inputQuery: result})
             }).catch(err => {
               console.log(err)
             })
@@ -44,7 +46,7 @@ const commentModule = {
       }
     },
     postComment(context, data) {
-      console.log(data)
+      // console.log(data)
       if(context.getters.getIsAuth) {
         console.log(context.getters.getIsAuth)
         if(data.content && data.title) {
@@ -55,6 +57,9 @@ const commentModule = {
             timestamp: data.timestamp,
             images: data.images,
             parentId: data.parentId
+          // }).then((result) => {
+          //   console.log(result)
+          //   context.commit('getSearchResults', {inputQuery: result})
           }).catch(err => {
             console.log(err)
           })

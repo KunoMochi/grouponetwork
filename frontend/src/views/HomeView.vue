@@ -46,8 +46,4 @@ export default {
     width: 100%;
     padding: 1rem;
   }
-
-  h1 {
-    text-align: center;
-  }
 </style>

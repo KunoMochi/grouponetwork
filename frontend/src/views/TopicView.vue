@@ -29,6 +29,7 @@ export default {
     props: ['id'],
     data() {
         return {
+            index: 0,
             query: ''
         }
     },

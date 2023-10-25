@@ -2,7 +2,7 @@
   <HeaderBar />
   <div class="app">
     <SidebarNav />
-    <router-view />
+    <router-view :key="$route" />
   </div>
   <FooterBar />
 </template>

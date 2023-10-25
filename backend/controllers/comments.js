@@ -180,20 +180,26 @@ exports.addComment = (req, res, next) => {
         return res.status(500).json({ error: err })
       }
 
+      let parentid = req.body.parentId
+      // console.log("parentid: " + parentid)
+      if (parentid)
+        parentid = parseInt(req.body.parentId)
+
       ps.execute({
         userid: parseInt(req.body.userId),
         title: req.body.title,
         postContent: req.body.postContent,
         timestamp: req.body.timestamp,
         images: req.body.images,
-        parentid: parseInt(req.body.parentId)
-      }, (err) => {
+        parentid: parentid
+      }, (err, result) => {
         if (err) {
           console.error(err)
           return res.status(500).json({ error: err })
         }
-        
-        res.status(200).json({ message: 'Comment Added!' })
+
+        res.status(200).json(result.recordset)
+        // res.status(200).json({ message: 'Comment Added!' })
         ps.unprepare(err => {
           if (err) {
             console.error(err)

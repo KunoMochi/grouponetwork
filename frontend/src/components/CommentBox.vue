@@ -88,16 +88,16 @@ export default {
         ...mapGetters(['getIsAuth','getUserId','getUserName'])
     },
     methods: {
-        ...mapActions(['postReply', 'editComment', 'deleteComment']),
+        ...mapActions(['postReply', 'editComment', 'deleteComment', 'resetPage']),
         onSubmit(data) {
             this.editComment(data)
             this.tempPostContent = data.content
             this.editModal = !this.editModal
-            this.$route.go()
         },
         onDelete(data) {
             this.deleteComment(data)
-            this.$route.go()
+            this.resetPage()
+            this.$router.push(`/`)
         },
         toggleEdit(data) {
             this.content = data
@@ -112,16 +112,13 @@ export default {
                 return moment(String(value)).format('MMM DD, yyyy h:mm A')
             }
         },
-        // onSend() {
-        //     this.replyModal = false
-        //     this.findChildComments()
-        //     console.log(this.query)
-        // },
         onSend({userId, content, timestamp, parentId}) {
             if(this.getIsAuth) {
                 if(content != '') {
                     this.postReply({userId, title: null, content, timestamp, images: null, parentId}).then(() => {
-                        this.$route.push('*')
+                        this.toggleReply()
+                        this.replyContent = ''
+                        // this.$router.push(`/topic/${this.$route.params.id}`)
                     }).catch(err => {
                         console.log(err)
                     })
@@ -135,22 +132,20 @@ export default {
         findChildComments() {
             axios('http://localhost:3000/api/comments/findChildComments/' + this.postCommentId).then((result) => {
                 this.query = result.data
-                if(this.query[0])
-                    console.log(this.query[0].CommentID)
+                // if(this.query[0])
+                //     console.log(this.query[0].CommentID)
             })
         }
     },
     beforeMount() {
         this.findChildComments()
-        // this.findComment()
-        // this.$set(this.query, 'CommentID', this.postCommentId)
     }
 }
 </script>
 
 <style lang="scss" scoped>
     .commentBox {
-        max-width: 1000px;
+        max-width: 800px;
         background-color: #474747;
         border: 1px solid #7c7c7c;
         border-radius: 5px;

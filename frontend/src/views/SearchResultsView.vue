@@ -45,7 +45,7 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-        },
+        }
     },
     beforeMount() {
         console.log(this.$route.query.query)
@@ -62,9 +62,5 @@ export default {
         width: 100%;
         text-align: left;
         padding: 1rem;
-    }
-
-    .comment {
-        margin: 1rem;
     }
 </style>

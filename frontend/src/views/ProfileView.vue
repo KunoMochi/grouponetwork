@@ -47,18 +47,18 @@ export default {
         ...mapMutations([['changeAllowed']]),
         findProfile() {
             axios('http://localhost:3000/api/profiles/findUser/' + this.id).then((result) => {
-                console.log(result.data)
+                // console.log(result.data)
                 this.query = result.data
             })
         },
         findUserComments() {
             axios('http://localhost:3000/api/comments/findUserComments/' + this.id).then((result) => {
-                console.log(result.data)
+                // console.log(result.data)
                 this.commentsQuery = result.data
             })
         }
     },
-    beforeMount() {
+    created() {
         this.findProfile()
         this.findUserComments()
         this.$store.commit('changeAllowed', { isAllowed: true })
@@ -85,7 +85,6 @@ export default {
 
     .comments {
         max-width: 800px;
-        padding: 1rem;
     }
 
     // div {

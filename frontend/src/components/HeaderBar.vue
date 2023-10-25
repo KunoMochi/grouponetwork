@@ -41,7 +41,8 @@ export default {
         ...mapMutations[('getSearchResults')],
         ...mapActions(['onLogOut','findComments']),
         onSearch(data) {
-            this.$router.go({
+            this.query = ''
+            this.$router.push({
                 name: 'search',
                 query: data
             })

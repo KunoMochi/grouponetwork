@@ -53,7 +53,7 @@ export default {
 
 <style lang="scss" scoped>
     .topicBox {
-        max-width: 1000px;
+        max-width: 800px;
         background-color: #474747;
         border: 1px solid #7c7c7c;
         border-radius: 5px;
@@ -101,7 +101,6 @@ export default {
     }
 
     .comment {
-        margin: 2rem;
         font-size: small;
     }
 
